@@ -28,5 +28,6 @@ async function createOrganisation(name, account, website, fuelReimbursementPolic
 
 }
 module.exports = {
-    isOrgValid
+    isOrgValid, 
+    createOrganisation
 }

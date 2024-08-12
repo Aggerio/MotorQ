@@ -58,10 +58,10 @@ router.post('/', async (req, res) => {
     const inserted = await insertNewVehicle(vin, org, details);
 
     if (inserted) {
-        res.status(201).json({ message: "Data inserted successfully" });
+        return res.status(201).json({ message: "Data inserted successfully" });
     }
     else {
-        res.status(500).json({ message: 'Database insertion failed' });
+        return res.status(500).json({ message: 'Database insertion failed' });
     }
 
 });
@@ -77,19 +77,19 @@ router.post('/:vin', nhtsaLimiter, async (req, res) => {
                 return res.status(201).json(info);
             } catch (err) {
                 console.error('Error decoding VIN:', err);
-                res.status(500).json({ message: 'Error decoding VIN or reaching NHTSA API' });
+                return res.status(500).json({ message: 'Error decoding VIN or reaching NHTSA API' });
             }
         }
         else {
 
             console.error("Vin does not exist in Db");
-            res.status(400).json({ message: "Vin does not exist in db" });
+            return res.status(400).json({ message: "Vin does not exist in db" });
         }
 
     }
     else {
         console.error("Invalid Vin Format");
-        res.status(400).json({ message: "Invalid Vin Format" });
+        return res.status(400).json({ message: "Invalid Vin Format" });
     }
 });
 
