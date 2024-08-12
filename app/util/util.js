@@ -1,10 +1,10 @@
 const rateLimit = require('express-rate-limit');
 const axios = require('axios');
 
-const nhtsaLimiter = rateLimit({
+const rateLimiter= rateLimit({
     windowMs: 60 * 1000, // 1 minute window
     max: 5, // limit each IP to 5 requests per windowMs
-    message: 'Too many requests to NHTSA, please try again later.',
+    message: 'Too many requests, please try again later.',
 });
 
 function isValidVin(vin) {
@@ -32,10 +32,23 @@ async function vinDetails(vin) {
     return vehicleDetails;
 
 }
+function findNonStringFields(data_body) {
+    const nonStringFields = [];
+
+    for (const [key, value] of Object.entries(data_body)) {
+        if (typeof value !== 'string') {
+            nonStringFields.push({ field: key, value: value, type: typeof value });
+        }
+    }
+
+    return nonStringFields;
+}
+
 
 module.exports = {
-    nhtsaLimiter,
+    rateLimiter,
     isValidVin,
     vinDetails,
+    findNonStringFields
 }
 

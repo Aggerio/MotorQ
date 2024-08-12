@@ -1,6 +1,6 @@
 const express = require('express');
 const NodeCache = require('node-cache');
-const { isValidVin, nhtsaLimiter, vinDetails } = require('../util/util');
+const { isValidVin,  vinDetails } = require('../util/util');
 const { insertNewVehicle, isVinPresent, getVehicleDetails } = require('../db/vehicleDbOperations');
 const { isOrgValid } = require('../db/orgDbOperations');
 
@@ -9,7 +9,7 @@ const router = express.Router();
 const vehicleCache = new NodeCache({ stdTTL: 600 }); // Cache for 10 minutes
 
 // GET /vehicles/decode/:vin
-router.get('/decode/:vin', nhtsaLimiter, async (req, res) => {
+router.get('/decode/:vin', async (req, res) => {
     const { vin } = req.params;
 
     if (isValidVin(vin)) {
@@ -66,7 +66,7 @@ router.post('/', async (req, res) => {
 
 });
 
-router.post('/:vin', nhtsaLimiter, async (req, res) => {
+router.post('/:vin',  async (req, res) => {
     const { vin } = req.params;
 
     if (isValidVin(vin)) {
