@@ -17,8 +17,10 @@ const nhtsaLimiter = rateLimit({
 });
 
 const vehicleRoutes = require('./app/routes/vehicleRoutes');
+const orgsRoutes = require('./app/routes/orgsRoutes');
 
 app.use('/vehicles', vehicleRoutes);
+app.use('/orgs', orgsRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);

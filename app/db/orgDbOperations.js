@@ -13,6 +13,20 @@ async function isOrgValid(orgId) {
         return false;
     }
 }
+
+async function createOrganisation(name, account, website, fuelReimbursementPolicy, speedLimitPolicy)
+{
+    try{
+        await pool.query('insert into Org values(?,?,?,?,?,?,?)', [name, account, website, fuelReimbursementPolicy, speedLimitPolicy, null, null]);
+        return true;
+    }
+    catch(err)
+    {
+        console.error("Create Organisation failed: ", err);
+        return false;
+    }
+
+}
 module.exports = {
     isOrgValid
 }
